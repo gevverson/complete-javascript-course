@@ -63,8 +63,9 @@ const transformer = function (str, fn) {
 };
 transformer('javascript is the best!', upperfirstword);
 transformer('javascript is the best!', oneword);
-
+//js uses callbacks all the time
 const high5 = function () {
   console.log('....chamgei');
 };
 document.body.addEventListener('click', high5);
+['cheru', 'givvverson', 'shelly'].forEach(high5);
