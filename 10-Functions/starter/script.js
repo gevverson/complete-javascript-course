@@ -126,3 +126,44 @@ console.log(swiss);
 
 book.call(swiss, ...flightdata);
 //bind method
+//book.call(eurowings,23,'sarah williams');
+
+const bookEW = book.bind(eurowings);
+const bookKQ = book.bind(Kenyaairline);
+const bookLX = book.bind(swiss);
+bookEW(23, 'sarah williams');
+
+const bookEW23 = book.bind(eurowings, 23);
+bookEW23('gevverson kings');
+bookEW23('shelma chebet');
+//with eventlisteners
+Kenyaairline.planes = 300;
+Kenyaairline.buyplane = function () {
+  console.log(this);
+
+  this.planes++;
+  console.log(this.planes);
+};
+Kenyaairline.buyplane();
+
+document
+  .querySelector('.buy')
+  .addEventListener('click', Kenyaairline.buyplane.bind(Kenyaairline));
+//partial application
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.05, 500));
+
+const addVAT = addTax.bind(null, 0.23);
+//addVAT=value=>value+value*0.23;
+
+console.log(addVAT(100));
+console.log(addVAT(200));
+
+const addTaxrate = function (rate) {
+  return function (value) {
+    return value + value * rate;
+  };
+};
+const addVAT2 = addTaxrate(0.23);
+console.log(addVAT2(100));
+console.log(addVAT2(23));
