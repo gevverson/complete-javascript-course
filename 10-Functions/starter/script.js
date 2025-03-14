@@ -82,7 +82,7 @@ greet('hallo')('cheruuu');
 //challenge
 const greetArr = greeting => name => console.log(`${greeting} ${name}`);
 greetArr('hi')('shelmaaaa');
-*/
+
 const Kenyaairline = {
   airline: 'Kenyaairline',
   iatacode: 'KQ',
@@ -167,3 +167,48 @@ const addTaxrate = function (rate) {
 const addVAT2 = addTaxrate(0.23);
 console.log(addVAT2(100));
 console.log(addVAT2(23));
+*/
+const poll = {
+  question: 'what is your favourite programming language?',
+  options: ['0:javascript', '1:python', '2:rust', '3:C++'],
+  //this generates [0,0,0,0].more in the next section.
+
+  answers: new Array(4).fill(0),
+  registernewanswer() {
+    //get the answer
+    const answer = Number(
+      prompt(
+        `${this.question}\n${this.options.join('\n')}\n
+        (write option number)`
+      )
+    );
+    console.log(answer);
+
+    //register answer
+    typeof answer === 'number' &&
+      answer < this.answers.length &&
+      this.answers[answer]++;
+
+    //console.log(this.answers);
+    this.displayResults();
+    this.displayResults('string');
+  },
+  displayResults(type = 'array') {
+    if (type === 'array') {
+      console.log(this.answers);
+    } else if (type === 'string') {
+      //poll results are 13,2,4,1
+      console.log(`poll results are ${this.answers.join(', ')}`);
+    }
+  },
+};
+//poll.registernewanswer();
+
+document
+  .querySelector('.poll')
+  .addEventListener('click', poll.registernewanswer.bind(poll));
+
+poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
+poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] }, 'string');
+//[5,2,3]
+//[1,5,3,9,6,1]
