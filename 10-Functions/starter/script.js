@@ -23,7 +23,7 @@ createbooking('LH123', 2, 800);
 createbooking('LH123', 2);
 createbooking('LH123', 5);
 createbooking('LH123', undefined, 1000);
-*/
+
 const flight = 'LH234';
 const Gevverson = {
   name: 'Gevverson Kings',
@@ -69,3 +69,60 @@ const high5 = function () {
 };
 document.body.addEventListener('click', high5);
 ['cheru', 'givvverson', 'shelly'].forEach(high5);
+
+const greet = function (greeting) {
+  return function (name) {
+    console.log(`${greeting} ${name}`);
+  };
+};
+const greeterhey = greet('iamuneee');
+greeterhey('cheruuuuuu');
+greeterhey('shelmaaa');
+greet('hallo')('cheruuu');
+//challenge
+const greetArr = greeting => name => console.log(`${greeting} ${name}`);
+greetArr('hi')('shelmaaaa');
+*/
+const Kenyaairline = {
+  airline: 'Kenyaairline',
+  iatacode: 'KQ',
+  bookings: [],
+  //book:function{}
+  book(flightnum, name) {
+    console.log(
+      `${name} booked a seat on ${this.airline} flight ${this.iatacode}${flightnum}`
+    );
+    this.bookings.push({ flight: `${this.iatacode}${flightnum}`, name });
+  },
+};
+Kenyaairline.book(239, 'gevverson kipkoech');
+Kenyaairline.book(678, 'shelma chebet');
+console.log(Kenyaairline);
+
+const eurowings = {
+  airline: 'Eurowings',
+  iatacode: 'EW',
+  bookings: [],
+};
+const book = Kenyaairline.book;
+//does not work
+//book(23, 'cheru kings');
+book.call(eurowings, 23, 'cheru kings');
+console.log(eurowings);
+book.call(Kenyaairline, 245, 'shantelle jepchirchir');
+console.log(Kenyaairline);
+
+const swiss = {
+  airline: 'swissairlines',
+  iatacode: 'LX',
+  bookings: [],
+};
+book.call(swiss, 583, 'habibibaby');
+console.log(swiss);
+//apply method
+const flightdata = [567, 'brigidchepkorir'];
+book.apply(swiss, flightdata);
+console.log(swiss);
+
+book.call(swiss, ...flightdata);
+//bind method
