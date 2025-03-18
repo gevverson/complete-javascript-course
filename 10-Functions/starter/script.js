@@ -167,7 +167,7 @@ const addTaxrate = function (rate) {
 const addVAT2 = addTaxrate(0.23);
 console.log(addVAT2(100));
 console.log(addVAT2(23));
-*/
+
 const poll = {
   question: 'what is your favourite programming language?',
   options: ['0:javascript', '1:python', '2:rust', '3:C++'],
@@ -212,3 +212,99 @@ poll.displayResults.call({ answers: [5, 2, 3] }, 'string');
 poll.displayResults.call({ answers: [1, 5, 3, 9, 6, 1] }, 'string');
 //[5,2,3]
 //[1,5,3,9,6,1]
+
+const runOnce = function () {
+  console.log('this will never run again');
+};
+runOnce();
+
+(function () {
+  console.log('THIS WILL NEVER RUN AGAIN');
+  const isPrivate = 25;
+})();
+//console.log(isPrivate);
+
+(() => console.log('this will also never run again'))();
+
+{
+  const isPrivate = 25;
+  var nptPrivate = 20;
+}
+//console.log(isPrivate);
+console.log(nptPrivate);
+*/
+//CLOSURES
+const securebooking = function () {
+  let passengercount = 0;
+  return function () {
+    passengercount++;
+    console.log(`${passengercount} passengers`);
+  };
+};
+const booker = securebooking();
+
+booker();
+booker();
+booker();
+
+console.dir(booker);
+
+function mycounter() {
+  let counter = 0;
+  return function () {
+    counter++;
+    console.log(`${counter} customers`);
+    return counter;
+  };
+}
+const add = mycounter();
+add();
+add();
+add();
+
+//more closure examples
+//example1
+let f;
+
+const g = function () {
+  const a = 25;
+  f = function () {
+    console.log(a * 25);
+  };
+};
+
+const h = function () {
+  const b = 700;
+  f = function () {
+    console.log(b * 3);
+  };
+};
+
+g();
+f();
+console.dir(f);
+//reassigning f function
+h();
+f();
+console.dir(f);
+
+//example 2
+const boardpassengers = function (n, wait) {
+  const pergroup = n / 3;
+  setTimeout(function () {
+    console.log(`we are now boarding all ${n} passengers`);
+    console.log(`there are 3 groups,each with ${pergroup} passengers`);
+  }, wait * 1000);
+  console.log(`we will start boarding in ${wait} seconds`);
+};
+
+boardpassengers(180, 3);
+//coding challenge 2
+(function () {
+  const header = document.querySelector('h1');
+  header.style.color = 'red';
+
+  document.querySelector('body').addEventListener('click', function () {
+    header.style.color = 'blue';
+  });
+})();
