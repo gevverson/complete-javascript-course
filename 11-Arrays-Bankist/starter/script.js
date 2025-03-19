@@ -65,15 +65,100 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // LECTURES
 
+/*const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);*/
+
+//const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+/////////////////////////////////////////////////
+
+let arr = ['a', 'b', 'c', 'd', 'e'];
+//SLICE
+console.log(arr.slice(2));
+console.log(arr.slice(2, 4));
+console.log(arr.slice(-2));
+console.log(arr.slice(-1));
+console.log(arr.slice(1, -2));
+console.log(arr.slice());
+console.log(...arr);
+console.log([...arr]);
+
+//SPLICE
+//console.log(arr.splice(2));
+//console.log(arr.splice(2, 4));
+//console.log(arr);
+//console.log(arr.splice(-2));
+//console.log(arr.splice(-1));
+//console.log(arr.splice(1, -2));
+//console.log(arr.splice());
+
+//reverse
+console.log([...arr]);
+console.log(arr);
+//console.log(arr.reverse());
+console.log(arr);
+
+//concat method
+const arr2 = ['f', 'g', 'h', 'i', 'j'];
+console.log(arr2);
+const letters = arr.concat(arr2);
+console.log(letters);
+console.log([...arr, ...arr2]);
+
+//join
+console.log([letters.join('-')]);
+
+//new at method
+const arr1 = [23, 11, 64];
+console.log(arr1[0]);
+console.log(arr1.at(0));
+
+console.log(arr1[arr1.length - 1]);
+console.log(arr1.slice(-1)[0]);
+console.log(arr1.at(-1));
+
+console.log('gevverson'.at(0));
+
+//looping arrays for each
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+//for (const movement of movements) {
+for (const [i, movement] of movements.entries()) {
+  if (movement > 0) {
+    console.log(`movement${i + 1}: you deposited ${movement}`);
+  } else {
+    console.log(`movement${i + 1}:you withdrew ${Math.abs(movement)}`);
+  }
+}
+
+movements.forEach(function (movement, i, array) {
+  if (movement > 0) {
+    console.log(`MOVEMENT${i + 1}: YOU DEPOSITED ${movement}`);
+  } else {
+    console.log(`MOVEMENT${i + 1}:YOU WITHDREW ${Math.abs(movement)}`);
+  }
+});
+
+//forEach with maps and sets
+//map
 const currencies = new Map([
   ['USD', 'United States dollar'],
   ['EUR', 'Euro'],
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+currencies.forEach(function (value, key, map) {
+  console.log(`${key}:${value}`);
+});
 
-/////////////////////////////////////////////////
+//set
+const currenciesnoma = new Set(['USD', 'GBP', 'USD', 'EUR', 'EUR']);
+console.log(currenciesnoma);
+currenciesnoma.forEach(function (value, key, map) {
+  console.log(`${key}:${value}`);
+});
 
-let arr = ['a', 'b', 'c', 'd', 'e'];
-console.log(arr.slice(2));
+//PROJECT BANKIST APP
