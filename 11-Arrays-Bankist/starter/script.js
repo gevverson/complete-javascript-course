@@ -68,12 +68,12 @@ const displayMovements = function (movements) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
 
     const html = `<div class="movements">
-        <div class="movements__row">
-          <div class="movements__type movements__type--${type}">${
+      <div class="movements__row">
+        <div class="movements__type movements__type--${type}">${
       i + 1
     }${type}</div>
-          <div class="movements__value">${mov}</div>
-        </div>`;
+        <div class="movements__value">${mov}€</div>
+      </div>`;
 
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
@@ -82,7 +82,7 @@ displayMovements(account1.movements);
 
 //computing user names
 //console.log(containerMovements.innerHTML);
-/*
+
 const user = 'Steven Thomas Williams'; //stw
 const username = user
   .toLowerCase()
@@ -92,7 +92,7 @@ const username = user
   })
   .join('');
 
-console.log(username);*/
+console.log(username);
 
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
@@ -111,15 +111,35 @@ const calDisplaybalance = function (movements) {
   labelBalance.textContent = `${balance} EUR`;
 };
 calDisplaybalance(account1.movements);
+
+const caldisplaysummary = function (movements) {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = `${incomes}€`;
+
+  const out = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = `${Math.abs(out)}€`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => (deposit * 1.2) / 100)
+    .filter(int => int >= 1)
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = `${interest}€`;
+};
+caldisplaysummary(account1.movements);
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
 
-/*const currencies = new Map([
+const currenciesMap = new Map([
   ['USD', 'United States dollar'],
   ['EUR', 'Euro'],
   ['GBP', 'Pound sterling'],
-]);*/
+]);
 
 //const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
@@ -245,7 +265,7 @@ const eurtousd = 1.1;
 //return mov * eurtousd;
 //});
 
-const movementsUSD = movements.map(mov => mov * eurtousd);
+/*const movementsUSD = movements.map(mov => mov * eurtousd);
 
 console.log(movements);
 console.log(movementsUSD);
@@ -263,16 +283,16 @@ console.log(movementsusdfor);
 });
 console.log(movementsdescription);*/
 
-const movementsdescription = movements.map(
-  (mov, i, arr) =>
-    `movements${i + 1}:${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}`
-);
-console.log(movementsdescription);
+//const movementsdescription = movements.map(
+//(mov, i, arr) =>
+//`movements${i + 1}:${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}`
+//);
+//console.log(movementsdescription);
 //filter method
-const deposits = movements.filter(function (mov, i, array) {
-  return mov > 0;
-});
-console.log(movements);
+//const deposits = movements.filter(function (mov, i, array) {
+// return mov > 0;
+//});
+/*console.log(movements);
 console.log(deposits);
 
 const depositsFor = [];
@@ -295,3 +315,45 @@ console.log(balance);
 let balance2 = 0;
 for (const mov of movements) balance2 += mov;
 console.log(balance2);
+
+//maximum value
+const max = movements.reduce((acc, mov) => {
+  if (acc > mov) return acc;
+  else return mov;
+}, movements[0]);
+console.log(max);
+*/
+//CODIMNG CHALLENGE
+/*
+const calcavaregehumanage = function (ages) {
+  const humanages = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
+  const adults = humanages.filter(age => age >= 18);
+  console.log(humanages);
+  console.log(adults);
+  const average = adults.reduce((acc, age) => acc + age, 0) / adults.length;
+  return average;
+};
+const avg1 = calcavaregehumanage([5, 2, 4, 1, 15, 8, 3]);
+const avg2 = calcavaregehumanage([16, 6, 10, 5, 6, 1, 4]);
+console.log(avg1, avg2);
+
+//THE MAGIC OF CHAINING METHODS
+const EURtousd = 1.1;
+console.log(movements);
+//PIPELINE
+const totaldepositsusd = movements
+  .filter(mov => mov > 0)
+  .map((mov, i, arr) => {
+    // console.log(arr);
+    return mov * eurtousd;
+  })
+  //.map(mov => mov * eurtousd)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(totaldepositsusd);*/
+
+//CODING CHALLENGE #3
+const calcavaregehumanages = ages =>
+  ages
+    .map(age => (age <= 2 ? 2 * age : 16 + age * 4))
+    .filter(age => age >= 18)
+    .reduce((acc, age, _i, arr) => acc + age / arr.length, 0);
