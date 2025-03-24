@@ -79,6 +79,8 @@ const displayMovements = function (movements) {
   });
 };
 displayMovements(account1.movements);
+
+//computing user names
 //console.log(containerMovements.innerHTML);
 /*
 const user = 'Steven Thomas Williams'; //stw
@@ -103,6 +105,12 @@ const createUsernames = function (accs) {
 };
 createUsernames(accounts);
 console.log(accounts);
+
+const calDisplaybalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+calDisplaybalance(account1.movements);
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -260,5 +268,30 @@ const movementsdescription = movements.map(
     `movements${i + 1}:${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}`
 );
 console.log(movementsdescription);
+//filter method
+const deposits = movements.filter(function (mov, i, array) {
+  return mov > 0;
+});
+console.log(movements);
+console.log(deposits);
 
-//computing userrnames
+const depositsFor = [];
+for (const mov of movements) if (mov > 0) depositsFor.push(mov);
+console.log(depositsFor);
+
+const withdrawals = movements.filter(mov => mov < 0);
+console.log(withdrawals);
+
+//reduce method
+console.log(movements);
+//accumulator->snowball
+//const balance = movements.reduce(function (acc, cur, i, array) {
+//console.log(`Iteration ${i}:${acc}`);
+// return acc + cur;
+//}, 0);
+const balance = movements.reduce((acc, cur) => acc + cur, 0);
+console.log(balance);
+
+let balance2 = 0;
+for (const mov of movements) balance2 += mov;
+console.log(balance2);
