@@ -61,6 +61,26 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+const displayMovements = function (movements) {
+  containerMovements.innerHTML = '';
+  //.textContent=0;
+  movements.forEach(function (mov, i) {
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
+
+    const html = `<div class="movements">
+        <div class="movements__row">
+          <div class="movements__type movements__type--${type}">${
+      i + 1
+    }${type}</div>
+          <div class="movements__value">${mov}</div>
+        </div>`;
+
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+  });
+};
+displayMovements(account1.movements);
+//console.log(containerMovements.innerHTML);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -162,3 +182,61 @@ currenciesnoma.forEach(function (value, key, map) {
 });
 
 //PROJECT BANKIST APP
+//CODING CHALLENGE #1
+/*
+
+const checkdogs = function (dogsjulia, dogskate) {
+  const dogsjuliacorected = dogsjulia.slice();
+  dogsjuliacorected.splice(0, 1);
+  dogsjuliacorected.splice(-2);
+  console.log(dogsjuliacorected);
+
+  //dogsjulia.slice(1, 3);
+
+  const dogs = dogsjuliacorected.concat(dogskate);
+  console.log(dogs);
+
+  dogs.forEach(function (dog, i) {
+    if (dog >= 3) {
+      console.log(`dog number${i + 1} is an adult,and is ${dog} years old`);
+    } else {
+      console.log(`dog number${i + 1} is still a puppy`);
+    }
+  });
+};
+//checkdogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
+checkdogs([9, 16, 6, 8, 3], [10, 5, 6, 1, 4]);*/
+//data transformations map,filter and reduce
+//map
+
+const eurtousd = 1.1;
+
+//const movementsUSD = movements.map(function (mov) {
+//return mov * eurtousd;
+//});
+
+const movementsUSD = movements.map(mov => mov * eurtousd);
+
+console.log(movements);
+console.log(movementsUSD);
+
+const movementsusdfor = [];
+for (const mov of movements) movementsusdfor.push(mov * eurtousd);
+console.log(movementsusdfor);
+
+/*const movementsdescription = movements.map((mov, i, arr) => {
+  if (mov > 0) {
+    return `movement${i + 1}: you deposited ${mov}`;
+  } else {
+    return `movement${i + 1}:you withdrew ${Math.abs(mov)}`;
+  }
+});
+console.log(movementsdescription);*/
+
+const movementsdescription = movements.map(
+  (mov, i, arr) =>
+    `movements${i + 1}:${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}`
+);
+console.log(movementsdescription);
+
+//computing userrnames
