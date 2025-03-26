@@ -352,8 +352,22 @@ const totaldepositsusd = movements
 console.log(totaldepositsusd);*/
 
 //CODING CHALLENGE #3
-const calcavaregehumanages = ages =>
+const calcavaregehumanage2 = function (ages) {
+  const humanages = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
+  const adults = humanages.filter(age => age >= 18);
+
+  const avarege = adults.reduce(
+    (acc, age, i, arr) => acc + age / arr.length,
+    0
+  );
+  return avarege;
+};
+const calcavaregehumanage = ages =>
   ages
     .map(age => (age <= 2 ? 2 * age : 16 + age * 4))
     .filter(age => age >= 18)
-    .reduce((acc, age, _i, arr) => acc + age / arr.length, 0);
+    .reduce((acc, age, i, arr) => acc + age / arr.length, 0);
+
+const avg1 = calcavaregehumanage([5, 2, 4, 1, 15, 8, 3]);
+const avg2 = calcavaregehumanage([16, 6, 10, 5, 6, 1, 4]);
+console.log(avg1, avg2);
