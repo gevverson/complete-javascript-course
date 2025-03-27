@@ -543,3 +543,45 @@ console.log(movements);
 movements.sort((a, b) => b - a);
 console.log(movements);
 //creating and filling arrays
+
+console.log([1, 2, 3, 4, 5, 6, 7]);
+const x = new Array(7);
+console.log(x);
+//x.fill(1);
+x.fill(1, 3, 5);
+console.log(x);
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z);
+labelBalance.addEventListener('click', function () {
+  const movementsui = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => Number(el.textContent.replace('€', ''))
+  );
+  console.log(movementsui);
+  const movementsui2 = [...document.querySelectorAll('.movements__value')];
+});
+//array methods practice
+const bankdepositsum = accounts
+  .flatMap(acc => acc.movements)
+  .filter(mov => mov > 0)
+  .reduce((sum, cur) => sum + cur, 0);
+console.log(bankdepositsum);
+//const numdeposits1000 = accounts
+//.flatMap(acc => acc.movements)
+//.filter(mov => mov >= 1000).length;
+//console.log(numdeposits1000);
+const numdeposits1000 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((count, cur) => (cur >= 1000 ? count + 1 : count), 0);
+console.log(numdeposits1000);
+let a = 10;
+console.log(a++);
+console.log(a);
+console.log(++a);
+console.log(a);
+console.log(a--);
+console.log(a);
+console.log(--a);
+console.log(a);
