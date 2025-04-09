@@ -139,54 +139,194 @@ mercedes.accelerate();
 mercedes.accelerate();
 mercedes.accelerate();
 mercedes.accelerate();
-*/
+
 
 class personcl {
-  constructor(firstname, birthyear) {
-    this.firstname = firstname;
+  constructor(fullname, birthyear) {
+    this.fullname = fullname;
     this.birthyear = birthyear;
   }
-  //methods will be added to the .prototype property
+
   calcage() {
-    console.log(2025 - this.birthyear);
+    console.log(new Date().getFullYear() - this.birthyear);
+  }
+
+  greet() {
+    console.log(`Hey ${this.fullname}`); // Changed to use fullname instead of firstname
+  }
+
+  get age() {
+    return 2025 - this.birthyear;
+  }
+
+  set fullname(name) {
+    if (name.includes(' ')) this._fullname = name;
+    else alert(`${name} is not a full name`);
+  }
+
+  get fullname() {
+    return this._fullname;
+  }
+
+  static hey() {
+    console.log('Hey there!');
   }
 }
 
-const cheru = new personcl('cheru', 2000);
+const cheru = new personcl('cheru kings', 2000);
 console.log(cheru);
 cheru.calcage();
 
 console.log(cheru.__proto__ === personcl.prototype);
-/*console.log(personcl.prototype.isPrototypeOf(cheru));
-console.log(cheru.__proto__.__proto__);
-console.log(cheru.__proto__.__proto__.__proto__);
-console.dir(personcl.prototype.constructor);
-console.log(cheru.__proto__ === personcl.prototype);
-console.log(cheru.__proto__.__proto__ === Object.prototype);
-console.log(cheru.__proto__.__proto__.__proto__ === Function.prototype);
-console.log(cheru.__proto__.__proto__.__proto__ === Object.prototype);
-*/
-personcl.prototype.greet = function () {
-  console.log(`hey ${this.firstname}`);
-};
-cheru.greet();
 
-//1.classes are not hoisted
-//2.classes are first-class citizens
-//3.classes are executed in strict mode
-//4.classes can have static methods
-//5.classes can have static properties
-//6.classes can have getters and setters
-//7.classes can have private fields
-//8.classes can have private methods
-//9.classes can have public fields
-//10.classes can have public methods
-//11.classes can have public static methods
-//12.classes can have public static properties
-//13.classes can have public static getters
-//14.classes can have public static setters
-//15.classes can have public static private fields
-//16.classes can have public static private methods
-//17.classes can have public static private getters
-//18.classes can have public static private setters
-//19.classes can have public static private properties
+// Remove this duplicate greet method since it's already defined in the class
+// personcl.prototype.greet = function () {
+//   console.log(`hey ${this.firstname}`);
+// };
+
+cheru.greet(); // Will now correctly output "Hey cheru kings"
+personcl.hey(); // Will output "Hey there!"
+*/
+
+const personproto = {
+  calcage() {
+    console.log(2023 - this.birthyear);
+  },
+};
+const steven = Object.create(personproto);
+console.log(steven);
+steven.name = 'steven';
+steven.birthyear = 2000;
+steven.calcage();
+console.log(steven.__proto__);
+console.log(steven.__proto__ === personproto);
+console.log(steven.__proto__.__proto__);
+console.log(steven.__proto__.__proto__ === Object.prototype);
+console.log(steven.__proto__.__proto__.__proto__);
+console.log(steven.__proto__.__proto__.__proto__ === null);
+//console.log(steven.__proto__.__proto__.__proto__.__proto__);
+//console.log(steven.__proto__.__proto__.__proto__.__proto__ === undefined);
+//console.log(steven.__proto__.__proto__.__proto__.__proto__ === null);
+//console.log(steven.__proto__.__proto__.__proto__ === Function.prototype);
+//console.log(
+//steven.__proto__.__proto__.__proto__.__proto__ === Function.prototype
+//);
+//console.log(steven.__proto__.__proto__.__proto__.__proto__ === Array.prototype);
+//console.log(
+// steven.__proto__.__proto__.__proto__.__proto__ === String.prototype
+//);
+console
+  .log
+  //steven.__proto__.__proto__.__proto__.__proto__ === Number.prototype
+  ();
+console
+  .log
+  //steven.__proto__.__proto__.__proto__.__proto__ === Boolean.prototype
+  ();
+//console.log(steven.__proto__.__proto__.__proto__.__proto__ === Date.prototype);
+console
+  .log
+  //steven.__proto__.__proto__.__proto__.__proto__ === RegExp.prototype
+  ();
+//console.log(steven.__proto__.__proto__.__proto__.__proto__ === Error.prototype);
+//console.log(steven.__proto__.__proto__.__proto__.__proto__ === Map.prototype);
+//console.log(steven.__proto__.__proto__.__proto__.__proto__ === Set.prototype);
+console
+  .log
+  //steven.__proto__.__proto__.__proto__.__proto__ === WeakMap.prototype
+  ();
+console
+  .log
+  //steven.__proto__.__proto__.__proto__.__proto__ === WeakSet.prototype
+  ();
+console
+  .log
+  //steven.__proto__.__proto__.__proto__.__proto__ === Symbol.prototype
+  ();
+// coding challlenge2
+
+class carcl {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+  accelerate() {
+    this.speed += 10;
+    console.log(`${this.make} is going at ${this.speed} km/h`);
+  }
+  brake() {
+    this.speed -= 5;
+    console.log(`${this.make} is going at ${this.speed} km/h`);
+  }
+  get speedUS() {
+    return this.speed / 1.6;
+  }
+  set speedUS(speed) {
+    this.speed = speed * 1.6;
+  }
+}
+const ford = new carcl('ford', 120);
+const tesla = new carcl('tesla', 95);
+console.log(ford.speedUS);
+console.log(tesla.speedUS);
+ford.accelerate();
+ford.accelerate();
+ford.brake();
+ford.accelerate();
+tesla.accelerate();
+tesla.accelerate();
+tesla.brake();
+tesla.accelerate();
+
+const person = function (firstname, birthyear) {
+  this.firstname = firstname;
+  this.birthyear = birthyear;
+};
+person.prototype.calcage = function () {
+  console.log(2023 - this.birthyear);
+};
+const student = function (firstname, birthyear, course) {
+  /*this.firstname = firstname;
+  this.birthyear = birthyear;
+  this.course = course;*/
+  person.call(this, firstname, birthyear);
+  this.course = course;
+};
+//linking prototypes
+student.prototype = Object.create(person.prototype);
+
+student.prototype.introduce = function () {
+  console.log(`my name is ${this.firstname} and i study ${this.course}`);
+};
+
+const mike = new student('mike', 2020, 'computer science');
+console.log(mike);
+mike.introduce();
+
+console.log(mike.__proto__);
+console.log(mike.__proto__ === student.prototype);
+console.log(mike.__proto__.__proto__);
+console.log(student.prototype.constructor);
+console.log(mike instanceof student);
+console.log(mike instanceof person);
+console.log(mike instanceof Object);
+console.log(mike instanceof Array);
+console.log(mike instanceof Function);
+console.log(mike instanceof String);
+console.log(mike instanceof Number);
+console.log(mike instanceof Boolean);
+console.log(mike instanceof Date);
+console.log(mike instanceof RegExp);
+console.log(mike instanceof Error);
+console.log(mike instanceof Map);
+console.log(mike instanceof Set);
+console.log(mike instanceof WeakMap);
+console.log(mike instanceof WeakSet);
+console.log(mike instanceof Symbol);
+console.log(mike instanceof BigInt);
+console.log(mike instanceof ArrayBuffer);
+console.log(mike instanceof DataView);
+console.log(mike instanceof Float32Array);
+console.log(mike instanceof Float64Array);
+
+//coding challenge number 3
