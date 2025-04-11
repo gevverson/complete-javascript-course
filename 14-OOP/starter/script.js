@@ -495,3 +495,74 @@ const acc9 = new Account('jane', 'USD', 9999);
 const acc10 = new Account('jerry', 'USD', 1010);
 const acc11 = new Account('joseph', 'USD', 1112);
 const acc12 = new Account('jose', 'USD', 1213);
+
+//private class fields
+class Account2 {
+  // Public fields
+  locale = navigator.language;
+
+  // Private fields
+  #movements = [];
+  #pin;
+
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.#pin = pin;
+    console.log(`Thanks for opening an account ${owner}`);
+  }
+
+  // Public interface (API)
+  getMovements() {
+    return this.#movements;
+  }
+  deposit(val) {
+    if (val > 0) {
+      this.#movements.push(val);
+      return this;
+    }
+  }
+  withdraw(val) {
+    this.deposit(-val);
+    return this;
+  }
+  _approveLoan(val) {
+    return true;
+  }
+  requestLoan(val) {
+    if (this._approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Loan approved for ${this.owner}`);
+      return true;
+    }
+    return false;
+  }
+  // Private method
+  #approveLoan(val) {
+    return true;
+  }
+  // Public method
+  requestLoanPublic(val) {
+    if (this.#approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Loan approved for ${this.owner}`);
+      return true;
+    }
+    return false;
+  }
+  // Static method
+  static helper() {
+    console.log('Helper method');
+  }
+  // Static property
+  static bankName = 'Bank of JS';
+}
+const ac1 = new Account2('cheru', 'USD', 1111);
+ac1.deposit(200);
+ac1.withdraw(100);
+ac1.requestLoan(1000);
+console.log(ac1.getMovements());
+console.log(ac1);
+console.log(ac1.requestLoan(1000));
+console.log(ac1.deposit(200));
+console.log(ac1.withdraw(100));
