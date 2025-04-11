@@ -139,7 +139,7 @@ mercedes.accelerate();
 mercedes.accelerate();
 mercedes.accelerate();
 mercedes.accelerate();
-
+*/
 
 class personcl {
   constructor(fullname, birthyear) {
@@ -186,7 +186,6 @@ console.log(cheru.__proto__ === personcl.prototype);
 
 cheru.greet(); // Will now correctly output "Hey cheru kings"
 personcl.hey(); // Will output "Hey there!"
-*/
 
 const personproto = {
   calcage() {
@@ -286,9 +285,9 @@ person.prototype.calcage = function () {
   console.log(2023 - this.birthyear);
 };
 const student = function (firstname, birthyear, course) {
-  /*this.firstname = firstname;
+  this.firstname = firstname;
   this.birthyear = birthyear;
-  this.course = course;*/
+  this.course = course;
   person.call(this, firstname, birthyear);
   this.course = course;
 };
@@ -330,3 +329,139 @@ console.log(mike instanceof Float32Array);
 console.log(mike instanceof Float64Array);
 
 //coding challenge number 3
+const car = function (make, speed) {
+  this.make = make;
+  this.speed = speed;
+};
+car.prototype.accelerate = function () {
+  this.speed += 10;
+  console.log(`${this.make} is going at ${this.speed} km/h`);
+};
+car.prototype.brake = function () {
+  this.speed -= 5;
+  console.log(`${this.make} is going at ${this.speed} km/h`);
+};
+const EV = function (make, speed, charge) {
+  car.call(this, make, speed);
+  this.charge = charge;
+};
+//linking prototypes
+EV.prototype = Object.create(car.prototype);
+EV.prototype.chargeBattery = function (chargeTo) {
+  this.charge = chargeTo;
+  console.log(`charged to ${this.charge}`);
+};
+EV.prototype.accelerate = function () {
+  this.speed += 20;
+  this.charge--;
+  console.log(
+    `${this.make} is going at ${this.speed} km/h, with a charge of ${this.charge}`
+  );
+};
+EV.prototype.brake = function () {
+  this.speed -= 10;
+  console.log(`${this.make} is going at ${this.speed} km/h`);
+};
+const bmw = new car('bmw', 120);
+const teslar = new EV('teslar', 120, 23);
+teslar.chargeBattery(90);
+console.log(teslar);
+teslar.accelerate();
+teslar.brake();
+teslar.accelerate();
+teslar.accelerate();
+
+class studentcl extends personcl {
+  constructor(fullname, birthyear, course) {
+    super(fullname, birthyear);
+    this.course = course;
+  }
+  introduce() {
+    console.log(`my name is ${this.fullname} and i study ${this.course}`);
+  }
+  calcage() {
+    console.log(
+      `i am ${2023 - this.birthyear} years old and i study ${this.course}`
+    );
+  }
+  calcage() {
+    console.log(`I  am ${2023 - this.birthyear} years old ,but as a  student 
+      i feel more like ${2023 - this.birthyear + 10}`);
+  }
+}
+const martha = new studentcl('martha jones', 2000, 'computer science');
+martha.introduce();
+martha.calcage();
+console.log(martha);
+
+const personProto2 = {
+  calcage() {
+    console.log(2023 - this.birthyear);
+  },
+  init(firstname, birthyear) {
+    this.firstname = firstname;
+    this.birthyear = birthyear;
+  },
+};
+const stephen = Object.create(personproto);
+console.log(stephen);
+
+const studentProto = Object.create(personProto2);
+studentProto.init = function (firstname, birthyear, course) {
+  personProto2.init.call(this, firstname, birthyear);
+  this.course = course;
+};
+const jay = Object.create(studentProto);
+jay.init('jay', 2000, 'computer science');
+console.log(jay);
+
+//inheritance between classes
+class account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.pin = pin;
+    this.movements = [];
+    this.locale = navigator.language;
+    console.log(`thanks for opening an account ${owner}`);
+  }
+  deposit(val) {
+    this.movements.push(val);
+  }
+  withdraw(val) {
+    this.movements.push(-val);
+  }
+  approveLoan(val) {
+    return true;
+  }
+  requestLoan(val) {
+    if (this.approveLoan(val)) {
+      this.deposit(val);
+      console.log(`loan approved`);
+    }
+  }
+}
+class savingsAccount extends account {
+  constructor(owner, currency, pin, interestRate) {
+    super(owner, currency, pin);
+    this.interestRate = interestRate;
+  }
+  requestLoan(val) {
+    if (this.approveLoan(val)) {
+      this.deposit(val);
+      console.log(`loan approved`);
+    }
+  }
+}
+const acc1 = new account('cheru', 'USD', 1111);
+const acc2 = new account('josh', 'USD', 2222);
+const acc3 = new account('matilda', 'USD', 3333);
+const acc4 = new account('jack', 'USD', 4444);
+const acc5 = new account('martha', 'USD', 5555);
+const acc6 = new account('steven', 'USD', 6666);
+const acc7 = new account('james', 'USD', 7777);
+const acc8 = new account('john', 'USD', 8888);
+const acc9 = new account('jane', 'USD', 9999);
+const acc10 = new account('jerry', 'USD', 1010);
+const acc11 = new account('joseph', 'USD', 1112);
+const acc12 = new account('jose', 'USD', 1213);
