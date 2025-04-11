@@ -414,54 +414,84 @@ studentProto.init = function (firstname, birthyear, course) {
 const jay = Object.create(studentProto);
 jay.init('jay', 2000, 'computer science');
 console.log(jay);
+jay.calcage();
 
 //inheritance between classes
-class account {
+class Account {
   constructor(owner, currency, pin) {
     this.owner = owner;
     this.currency = currency;
-    this.pin = pin;
-    this.movements = [];
+    // Properties with _ are considered "private" by convention
+    this._pin = pin;
+    this._movements = [];
     this.locale = navigator.language;
-    console.log(`thanks for opening an account ${owner}`);
+    console.log(`Thanks for opening an account ${owner}`);
   }
+
+  // Public interface (API)
+  getMovements() {
+    return this._movements;
+  }
+
   deposit(val) {
-    this.movements.push(val);
-  }
-  withdraw(val) {
-    this.movements.push(-val);
-  }
-  approveLoan(val) {
-    return true;
-  }
-  requestLoan(val) {
-    if (this.approveLoan(val)) {
-      this.deposit(val);
-      console.log(`loan approved`);
+    if (val > 0) {
+      this._movements.push(val);
+      return this;
     }
   }
+
+  withdraw(val) {
+    this._movements.push(-val);
+    return this;
+  }
+
+  _approveLoan(val) {
+    // Internal method (private)
+    return true;
+  }
+
+  requestLoan(val) {
+    if (this._approveLoan(val)) {
+      this.deposit(val);
+      console.log(`Loan approved for ${this.owner}`);
+      return true;
+    }
+    return false;
+  }
 }
-class savingsAccount extends account {
+
+class savingsAccount extends Account {
   constructor(owner, currency, pin, interestRate) {
     super(owner, currency, pin);
     this.interestRate = interestRate;
   }
   requestLoan(val) {
-    if (this.approveLoan(val)) {
+    if (this._approveLoan(val)) {
       this.deposit(val);
       console.log(`loan approved`);
     }
   }
 }
-const acc1 = new account('cheru', 'USD', 1111);
-const acc2 = new account('josh', 'USD', 2222);
-const acc3 = new account('matilda', 'USD', 3333);
-const acc4 = new account('jack', 'USD', 4444);
-const acc5 = new account('martha', 'USD', 5555);
-const acc6 = new account('steven', 'USD', 6666);
-const acc7 = new account('james', 'USD', 7777);
-const acc8 = new account('john', 'USD', 8888);
-const acc9 = new account('jane', 'USD', 9999);
-const acc10 = new account('jerry', 'USD', 1010);
-const acc11 = new account('joseph', 'USD', 1112);
-const acc12 = new account('jose', 'USD', 1213);
+
+const acc1 = new Account('cheru', 'USD', 1111);
+acc1.deposit(200);
+acc1.withdraw(100);
+acc1.requestLoan(1000);
+console.log(acc1.getMovements());
+console.log(acc1);
+console.log(acc1._pin);
+console.log(acc1.requestLoan(1000));
+console.log(acc1.deposit(200));
+console.log(acc1.withdraw(100));
+console.log(acc1.getMovements());
+const acc2 = new Account('josh', 'USD', 2222);
+const acc3 = new Account('matilda', 'USD', 3333);
+const acc4 = new Account('jack', 'USD', 4444);
+const acc5 = new Account('martha', 'USD', 5555);
+const acc6 = new Account('steven', 'USD', 6666);
+const acc7 = new Account('james', 'USD', 7777);
+const acc8 = new Account('john', 'USD', 8888);
+const acc9 = new Account('jane', 'USD', 9999);
+const acc10 = new Account('jerry', 'USD', 1010);
+const acc11 = new Account('joseph', 'USD', 1112);
+const acc12 = new Account('jose', 'USD', 1213);
