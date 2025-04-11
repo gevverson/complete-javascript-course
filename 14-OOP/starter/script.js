@@ -256,6 +256,7 @@ class carcl {
   brake() {
     this.speed -= 5;
     console.log(`${this.make} is going at ${this.speed} km/h`);
+    return this;
   }
   get speedUS() {
     return this.speed / 1.6;
@@ -341,6 +342,40 @@ car.prototype.brake = function () {
   this.speed -= 5;
   console.log(`${this.make} is going at ${this.speed} km/h`);
 };
+
+class EVLcl extends carcl {
+  constructor(make, speed, charge) {
+    super(make, speed);
+    this.charge = charge;
+  }
+  chargeBattery(chargeTo) {
+    this.charge = chargeTo;
+    console.log(`charged to ${this.charge}`);
+    return this;
+  }
+  accelerate() {
+    this.speed += 20;
+    this.charge--;
+    console.log(
+      `${this.make} is going at ${this.speed} km/h, with a charge of ${this.charge}`
+    );
+    return this;
+  }
+}
+const rivian = new EVLcl('Rivian', 120, 23);
+rivian.chargeBattery(90);
+console.log(rivian);
+rivian
+  .accelerate()
+  .accelerate()
+  .accelerate()
+  .brake()
+  .chargeBattery(50)
+  .accelerate();
+console.log(rivian.speedUS);
+rivian.brake();
+rivian.accelerate();
+
 const EV = function (make, speed, charge) {
   car.call(this, make, speed);
   this.charge = charge;
@@ -566,3 +601,8 @@ console.log(ac1);
 console.log(ac1.requestLoan(1000));
 console.log(ac1.deposit(200));
 console.log(ac1.withdraw(100));
+//chaining methods
+acc1.deposit(200).deposit(300).withdraw(100);
+console.log(acc1.getMovements());
+console.log(acc1);
+console.log(acc1.requestLoan(1000));
