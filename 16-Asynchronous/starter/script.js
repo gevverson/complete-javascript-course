@@ -171,20 +171,9 @@ const getCountryData = function (country) {
 };
 
 btn.addEventListener('click', function () {
-  navigator.geolocation.getCurrentPosition(
-    position => {
-      const { latitude, longitude } = position.coords;
-      fetch(
-        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}`
-      )
-        .then(response => response.json())
-        .then(data => {
-          getCountryData(data.countryName);
-        });
-    },
-    err => {
-      console.error(err);
-      alert('Could not get your position');
-    }
-  );
+  //getCountryData('usa');
+  //getCountryData('portugal');
+  getCountryData('kenya');
+  //getCountryData('italy');
+  //getCountryData('ethiopia');
 });
