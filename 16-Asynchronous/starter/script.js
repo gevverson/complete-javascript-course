@@ -170,5 +170,21 @@ const getCountryData = function (country) {
     .then(data => renderCountry(data, 'neighbour'));
 };
 
-getCountryData('argentina');
-//getCountryData('italy');
+btn.addEventListener('click', function () {
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      const { latitude, longitude } = position.coords;
+      fetch(
+        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}`
+      )
+        .then(response => response.json())
+        .then(data => {
+          getCountryData(data.countryName);
+        });
+    },
+    err => {
+      console.error(err);
+      alert('Could not get your position');
+    }
+  );
+});
