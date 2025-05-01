@@ -167,14 +167,8 @@ const getCountryData = function (country) {
       return fetch(`https://restcountries.com/v2/alpha/${neighbour}`);
     })
     .then(response => response.json())
-    .then(data => renderCountry(data, 'neighbour'))
-    .catch(err => alert(err));
+    .then(data => renderCountry(data, 'neighbour'));
 };
 
-btn.addEventListener('click', function () {
-  //getCountryData('usa');
-  //getCountryData('portugal');
-  getCountryData('kenya');
-  //getCountryData('italy');
-  //getCountryData('ethiopia');
-});
+getCountryData('argentina');
+//getCountryData('italy');
